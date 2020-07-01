@@ -1,20 +1,15 @@
 def nyc_pigeon_organizer(data)
-  pigeon_list = { }
-  attributes = { }
-  pigeon_name =[ ]
-  data.each { |key, value|
-    attributes.store(key, [])
-      value.each { |inner_key,inner_value|
-      inner_value.each {|name|
-         pigeon_name.push(name)
-          pigeon_list.store(name,attributes)
-        }
-      if inner_value.include? pigeon_name
-      attributes[key].push(inner_key.to_s)
-    end
-      }
-    }
-pigeon_name
-
+    final_result=data.each_with_object({}) do |(key,value),final_array|
+    value.each do |inner_key,names|
+        names.each do |name|
+            if !final_array[name]
+                final_array[name][key] ={}
+            end
+            if !final_array[name][key]
+                !final_array[name][key] =[]
+            end 
+            final_array[name][key].push(inner_key.to_s)
+        end 
+    end 
 end
-nyc_pigeon_organizer(pigeon_data)
+end
